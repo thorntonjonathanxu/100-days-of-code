@@ -5,4 +5,9 @@ The log of my #100DaysOfCode challenge. Started on 03/16/2022.
 ## Log
 
 ### R1D# 
-Content For Log Goes Here
+For my first project for this challenge, I'd like to review some of the open-source data sources that are available and general effective and appear visualizations using only python libraries/extensions. 
+
+I implemented a simple request API request to pull down the records related to safety information and tried to map out bar charts and distribution content for categorical data including age and gender. Had issues trying to map neighborhood and lat/log data but will pursue this in the coming days as I work through this content. 
+
+Applicable Source Data:
+https://data.cincinnati-oh.gov/safety/Traffic-Crash-Reports-CPD-/rvmt-pkmq
