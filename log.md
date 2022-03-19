@@ -16,3 +16,9 @@ https://data.cincinnati-oh.gov/safety/Traffic-Crash-Reports-CPD-/rvmt-pkmq
 Today I wanted to focus on the aspects of categorizing data and displaying that information with matplotlib. Was able to build out a few pivot tables to show the breakdown by neighbor and built simple dataframe calls to display the content for age, gender, and neighborhood. 
 
 I also inserted the mass data dump for the CSV file which I’ll use for my overall dataset now that I have general familiarization of the data. Am interested in refining the API call to grab the most current result-set every x number of days and determine where I’ll store this information in the longer term.
+
+
+### Day 3:
+Today I focused on import libraries for additional visualization tools including Plotly and Altair and getting the basic framework content interacting with Vscode. Didn't make a lot of progress as I was having issues with Anaconda rendering the visualizations and then realized that VSC doesn't host the plotly or altair visualizations locally so switched to Jupyter Notebook environment. 
+
+A bit of a light day for development on the project but this is a rest day before going into more intense data models. 
