@@ -4,7 +4,6 @@ import enchant
 import webbrowser
 import pyautogui
 import time
-from bs4 import BeautifulSoup
 from string import ascii_lowercase
 
 # Function activates GoogleChrome application and opens a new Tab.
@@ -29,7 +28,7 @@ def closeBrowser():
     # Status 2 - correct - letter has been used and correct location
     # Status 3 - absent - letter used but not used
 
-def alphabetlist():
+def alphabetlist(letters:dict):
     # Assume location on screen is always consistent
     # BeautifulSoup read in the html content from the current browser
     
@@ -39,7 +38,8 @@ def alphabetlist():
     # Grab All instances of "game-tile"
     # Loop through each letter until attribute doesn't exist then break
         # If found update dictionary
-
+    
+    
     return False
 
 # Function generates a dictionary with all lowercase alphabet letters as the key and status as the value.
@@ -50,10 +50,13 @@ def builtalphabetdict():
     return dict
 
 def main():
-    # openBrowser()
-    letters = builtalphabetdict()
+    openBrowser()
+    pyautogui.click()
+    # letters = builtalphabetdict()
+
+    print(pyautogui.locateOnScreen('Wordle\word-row.png'))
     print(letters)
-    alphabetlist()
+    # alphabetlist()
 
 if __name__ == "__main__":
     main()
