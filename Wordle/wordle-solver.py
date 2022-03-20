@@ -5,6 +5,7 @@ import webbrowser
 import pyautogui
 import time
 from string import ascii_lowercase
+import random
 
 # Function activates GoogleChrome application and opens a new Tab.
 def openBrowser():
@@ -49,14 +50,59 @@ def builtalphabetdict():
         dict[c] = 0
     return dict
 
+
+# Function reads in locally generated CSV file and returns the full list of words. 
+def getpossiblewords() -> list:
+    words = []
+    with open('.\Wordle\words.csv','r') as f:
+        for row in f:
+            words.append(row)
+    return words
+
+# Function takes in a list of words, shuffles the list, and returns top value.
+def getgameword(words:list) -> str:
+    random.shuffle(words)
+    return words[0]
+
+def guessword(words:list) -> str:
+    # while True:
+        # try:
+    guess = input('Please choose a word')
+        # except ValueError:
+        #     print("Not a! Please enter an integer.")
+        #     continue
+        # if len(guess) != 5 and guess not in words:
+    return guess
+
+def printboard(guesses:list, alphabetlist:list) -> None:
+    for i in range(6):
+        if len(guesses) > i:
+            print(f'{i} {guesses[i]}')
+        else:
+            print(f'{i} ')
+    print(alphabetlist)
+
+
 def main():
-    openBrowser()
-    pyautogui.click()
+    # openBrowser()
+    # pyautogui.click()
     # letters = builtalphabetdict()
 
-    print(pyautogui.locateOnScreen('Wordle\word-row.png'))
-    print(letters)
+    # print(pyautogui.locateOnScreen('Wordle\word-row.png'))
+    # print(letters)
     # alphabetlist()
+
+    ## GAME START
+    words = getpossiblewords()
+    gameword = getgameword(words)
+    guesses = []
+    letters = builtalphabetdict()
+    alphabetlist = letters.keys()
+    printboard(guesses, alphabetlist)
+
+   ## GAME ROUNDS 
+   # User Input is taken in
+   # Append Users input 
 
 if __name__ == "__main__":
     main()
