@@ -22,3 +22,12 @@ I also inserted the mass data dump for the CSV file which I’ll use for my over
 Today I focused on import libraries for additional visualization tools including Plotly and Altair and getting the basic framework content interacting with Vscode. Didn't make a lot of progress as I was having issues with Anaconda rendering the visualizations and then realized that VSC doesn't host the plotly or altair visualizations locally so switched to Jupyter Notebook environment. 
 
 A bit of a light day for development on the project but this is a rest day before going into more intense data models. 
+
+### Day 4:
+
+Decided to take a break from the visaulization project and foucs more on the Wordle Solver algorithm. Was able to build the basic game functionality and a simple loop that takes in user input and checks if the values exist and stores it in a list.
+
+### Day 5:
+Was able to update my logic from yesterday for how I am oranizing the data that is captured when checking for the word existence in the function. Rather than have a list with 3 elements [index, letter, status] decided to just have separate list for each status state and then check the list individually. This skimmed down the noise and complexity of the function checks and make sthe code more readable. 
+
+Need to figure out how to generate the substring permutations without completely writting 5 loops which is my main objective for tomorrow.

@@ -95,57 +95,88 @@ def main():
     # alphabetlist()
 
     ## GAME START
+    d = enchant.Dict("en_US")
+
     words = getpossiblewords()
     gameword = getgameword(words)
     guesses = []
     letters = builtalphabetdict()
     alphabetlist = letters.keys()
     printboard(guesses, alphabetlist)
-    print(gameword)
+    print(f'Game Word: {gameword}')
     n = 0 
+    correct = []
+    present = []
+    absent = []
+
     ## GAME ROUNDS 
-    while n < 2:
+    while n < 5:
         # User Input is taken in
-        guesses.append(guessword(words))
+        currentword = guessword(words)
+        guesses.append(currentword)
 
         # Find the bisection of the guess word and the solution word
         # correct_letters = list(set(list(guesses[0])).intersection(set(list(gameword))))
 
+        # If user guesses the word correctly game ends
+        if currentword == gameword:
+            print('You Win')
+            break
         
-        
-        # If correct letters is not null, loop through solution and guess word 
-        temp1 = []
-        temp2 = []
-        for idx, i in enumerate(list(guesses[len(guesses)-1])):
-            temp1.append([idx,i])
-        for idx, i in enumerate(list(gameword)):
-            temp2.append([idx,i])
-
-        for i in range(5):
-            for j in range(5):
-                if temp1[i] == temp2[i]:
-                    letters[temp1[i][1]] = 2
-                    print('Correct', temp1[i], temp2[i])        
-                elif temp1[i][1] == temp2[j][1] and i != j:
-                    letters[temp1[i][1]] = 1
-                    print('Present', temp1[i], temp2[j])
+        # Compare the gameword and the current word to see which letters are the same or different.
+        for idx, i in enumerate(gameword):
+            for idy, j in enumerate(currentword):
+                if i == j and idx == idy:
+                    if [idx,i] not in correct:
+                        correct.append([idx, i])
+                elif i == j:
+                    if [idx,i] not in present:
+                        present.append([idx,i])
                 else:
-                    continue                
+                    if j not in absent:
+                        absent.append(j)
+        # Clean up absent for any letters that exist are either correct or present
+        for i in correct+present:
+            print(i)
+            if i[1] in absent:
+                absent.remove(i[1])
+           
+        print(f'Correct: {correct}')
+        print(f'Present: {present}')      
+        print(f'Absent: {absent}')      
+        
+        # Need to identify method of grabing the correct letters before running the loop to clean up the data
 
+        # s1, s2, s3, s4, s5 = ("",)*5
+        # if correct[0][0] == 0:
+        #     s1 = correct[0][0]
+        # if correct[1][0] == 1:
+        #     s2 = correct[1][0]
+        # if correct[2][0] == 2:
+        #     s3 = correct[2][0]
+        # if correct[3][0] == 3:
+        #     s4 = correct[3][0]
+        # if correct[4][0] == 4:
+        #     s5 = correct[4][0]
 
-            # if i in list(gameword) and idx == idy:
-            #     letters[i] = 2
-            #     print(i, idx, f'Correct - {idx}')
-            # elif i in list(gameword):
-            #     letters[i] = 1
-            #     print(i, idx, f'Present not in {idx}')
-            # else:
-            #     # print(i, 'Not Present')
-            #     continue
-        for key, val in letters.items():
-            if val != 0:
-                print(key,val)
-        n += 1
+        # for a in letters:
+        #     for b in letters:
+        #         for c in letters:
+        #             for d in letters:
+        #                 for e in letters:
+                            
+        # Example for current code that I use to run for words that have three solved letters.
+        # the dict is the list of letters that are currently active on the board. 
+        # This code takes each and every permutation of the code and concats the data together.
+        # words = []
+        # for i in dict:
+        #     for j in dict:
+        #         word = ""
+        #         if d.check(word):
+        #             words.append(word)
+
+        # for i in words:
+        #     print(i)
 
 if __name__ == "__main__":
     main()
