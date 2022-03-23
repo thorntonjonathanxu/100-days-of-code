@@ -6,6 +6,8 @@ import pyautogui
 import time
 from string import ascii_lowercase
 import random
+import itertools
+
 
 # Function activates GoogleChrome application and opens a new Tab.
 def openBrowser():
@@ -84,6 +86,15 @@ def printboard(guesses:list, alphabetlist:list) -> None:
 # def checkword(guess:str,solution:str, alphabetlist:dict):
     # for i in list(guess):
 
+def possibilties(s):
+    n_wildcard = s.count('?')
+    letters = []
+    for c in ascii_lowercase:
+        letters.append(c)
+    for subs in itertools.product(letters, repeat=n_wildcard):
+        subs = iter(subs)
+        yield ''.join([x if x != '?' else subs.__next__() for x in s])
+
 
 def main():
     # openBrowser()
@@ -99,18 +110,24 @@ def main():
 
     words = getpossiblewords()
     gameword = getgameword(words)
-    guesses = []
-    letters = builtalphabetdict()
-    alphabetlist = letters.keys()
-    printboard(guesses, alphabetlist)
-    print(f'Game Word: {gameword}')
+
+
     n = 0 
     correct = []
     present = []
     absent = []
+    letters = []
+    guesses = []
+    for c in ascii_lowercase:
+        letters.append(c)
 
+    alphabetlist = letters
+    printboard(guesses, alphabetlist)
+    print(f'Game Word: {gameword}')
+    
     ## GAME ROUNDS 
     while n < 5:
+        possible = set()
         # User Input is taken in
         currentword = guessword(words)
         guesses.append(currentword)
@@ -140,31 +157,50 @@ def main():
             print(i)
             if i[1] in absent:
                 absent.remove(i[1])
+
+        for i in absent:
+            if i in letters:
+                letters.remove(i)
            
         print(f'Correct: {correct}')
         print(f'Present: {present}')      
-        print(f'Absent: {absent}')      
+        print(f'Absent: {absent}')
+        print(f'Alphabet: {letters}')
+
+        correct_idx = {}
+        for i in correct:
+            letter = i[1]
+            index = i[0]
+            correct_idx[index] = letter
+        print(correct_idx.items())
+
+        s0, s1, s2, s3, s4 = ("?",)*5
+        if correct_idx is not None:
+            if 0 in correct_idx:
+                s0 = correct_idx[0]
+            if 1 in correct_idx:
+                s1 = correct_idx[1]
+            if 2 in correct_idx:
+                s2 = correct_idx[2]
+            if 3 in correct_idx:
+                s3 = correct_idx[3]
+            if 4 in correct_idx:
+                s4 = correct_idx[4]
+
+        print(f's0: {s0}, s1: {s1}, s2: {s2}, s3: {s3}, s4: {s4}')
+
+        temp = s0 + s1 + s2 + s3 + s4
+        n_wildcard = temp.count('?')
+
+        for p in possibilties(temp):
+            print(p)
+            if p in words:
+                possible.add(p)
         
+        print(f'Possible Words Include: {possible}')
+
         # Need to identify method of grabing the correct letters before running the loop to clean up the data
-
-        # s1, s2, s3, s4, s5 = ("",)*5
-        # if correct[0][0] == 0:
-        #     s1 = correct[0][0]
-        # if correct[1][0] == 1:
-        #     s2 = correct[1][0]
-        # if correct[2][0] == 2:
-        #     s3 = correct[2][0]
-        # if correct[3][0] == 3:
-        #     s4 = correct[3][0]
-        # if correct[4][0] == 4:
-        #     s5 = correct[4][0]
-
-        # for a in letters:
-        #     for b in letters:
-        #         for c in letters:
-        #             for d in letters:
-        #                 for e in letters:
-                            
+                           
         # Example for current code that I use to run for words that have three solved letters.
         # the dict is the list of letters that are currently active on the board. 
         # This code takes each and every permutation of the code and concats the data together.
@@ -177,6 +213,8 @@ def main():
 
         # for i in words:
         #     print(i)
+
+
 
 if __name__ == "__main__":
     main()
