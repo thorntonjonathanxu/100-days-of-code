@@ -86,11 +86,8 @@ def printboard(guesses:list, alphabetlist:list) -> None:
 # def checkword(guess:str,solution:str, alphabetlist:dict):
     # for i in list(guess):
 
-def possibilties(s):
+def possibilties(s:str,letters:list):
     n_wildcard = s.count('?')
-    letters = []
-    for c in ascii_lowercase:
-        letters.append(c)
     for subs in itertools.product(letters, repeat=n_wildcard):
         subs = iter(subs)
         yield ''.join([x if x != '?' else subs.__next__() for x in s])
@@ -106,8 +103,6 @@ def main():
     # alphabetlist()
 
     ## GAME START
-    d = enchant.Dict("en_US")
-
     words = getpossiblewords()
     gameword = getgameword(words)
 
@@ -167,6 +162,7 @@ def main():
         print(f'Absent: {absent}')
         print(f'Alphabet: {letters}')
 
+        #TODO Update Code and Refactor to simple method.
         correct_idx = {}
         for i in correct:
             letter = i[1]
@@ -187,33 +183,25 @@ def main():
             if 4 in correct_idx:
                 s4 = correct_idx[4]
 
+        # TODO 
+        #-----------------------------------------------------------
+        
         print(f's0: {s0}, s1: {s1}, s2: {s2}, s3: {s3}, s4: {s4}')
 
         temp = s0 + s1 + s2 + s3 + s4
         n_wildcard = temp.count('?')
 
-        for p in possibilties(temp):
-            print(p)
-            if p in words:
-                possible.add(p)
-        
-        print(f'Possible Words Include: {possible}')
+        # Limit amount of checks when user has identifed at least 3 characters
+        if n_wildcard < 3:
+            for p in possibilties(temp,letters):
+                print(p)
+                if p in words:
+                    possible.add(p)
+            
+            print(f'Possible Words Include: {possible}')
 
-        # Need to identify method of grabing the correct letters before running the loop to clean up the data
-                           
-        # Example for current code that I use to run for words that have three solved letters.
-        # the dict is the list of letters that are currently active on the board. 
-        # This code takes each and every permutation of the code and concats the data together.
-        # words = []
-        # for i in dict:
-        #     for j in dict:
-        #         word = ""
-        #         if d.check(word):
-        #             words.append(word)
-
-        # for i in words:
-        #     print(i)
-
+        else:
+            print(f'Not enough information, guess again')
 
 
 if __name__ == "__main__":

@@ -28,8 +28,13 @@ A bit of a light day for development on the project but this is a rest day befor
 Decided to take a break from the visaulization project and foucs more on the Wordle Solver algorithm. Was able to build the basic game functionality and a simple loop that takes in user input and checks if the values exist and stores it in a list.
 
 ### Day 5:
+
 Was able to update my logic from yesterday for how I am oranizing the data that is captured when checking for the word existence in the function. Rather than have a list with 3 elements [index, letter, status] decided to just have separate list for each status state and then check the list individually. This skimmed down the noise and complexity of the function checks and make sthe code more readable. 
 
 Need to figure out how to generate the substring permutations without completely writting 5 loops which is my main objective for tomorrow.
 
 ### Day 6
+
+Decided to refactor the method on generating the words by leveraging the itertools generator object. Rather than trying to build out a dynamic list, I decided to create a string with the indexes of the know characters set and then keeping the unknown set to a '?' indicator. The method generates all permutations and checks if its a valid word. To save on runtime, the user needs to guess at least 3 positional letters. 
+
+Never really enjoyed using generators but this was definitely an ideal use case for leveraging it. Next steps will be to build methods on using the information about the words that are present and loading that content into the string checks.
