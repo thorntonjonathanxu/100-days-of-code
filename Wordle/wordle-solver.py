@@ -7,6 +7,9 @@ import time
 from string import ascii_lowercase
 import random
 import itertools
+import tkinter as tk
+
+### UI Functionality
 
 
 # Function activates GoogleChrome application and opens a new Tab.
@@ -23,6 +26,7 @@ def closeBrowser():
     print("tab closed")
 
 
+### GAME Functionality
 
 # Function goes through the gameboard and loads the alphabet into a list of characters that 
 # are currently active with the applicable status. 
@@ -57,6 +61,7 @@ def builtalphabetdict():
 def getpossiblewords() -> list:
     words = []
     with open('.\Wordle\words.csv','r') as f:
+        next(f)         # Skip header row in file
         for row in f:
             row = row.strip('\n')[0:]
             words.append(row)
@@ -127,12 +132,11 @@ def main():
         currentword = guessword(words)
         guesses.append(currentword)
 
-        # Find the bisection of the guess word and the solution word
-        # correct_letters = list(set(list(guesses[0])).intersection(set(list(gameword))))
-
         # If user guesses the word correctly game ends
         if currentword == gameword:
             print('You Win')
+            # End the Game
+            # return True
             break
         
         # Compare the gameword and the current word to see which letters are the same or different.
@@ -149,10 +153,11 @@ def main():
                         absent.append(j)
         # Clean up absent for any letters that exist are either correct or present
         for i in correct+present:
-            print(i)
-            if i[1] in absent:
-                absent.remove(i[1])
+            letter = i[1]
+            if letter in absent:
+                absent.remove(letter)
 
+        # Clean up any letters we know are no longer used in the formula
         for i in absent:
             if i in letters:
                 letters.remove(i)
@@ -162,47 +167,38 @@ def main():
         print(f'Absent: {absent}')
         print(f'Alphabet: {letters}')
 
-        #TODO Update Code and Refactor to simple method.
-        correct_idx = {}
+        temp = ['?'] * 5
+
         for i in correct:
-            letter = i[1]
             index = i[0]
-            correct_idx[index] = letter
-        print(correct_idx.items())
+            letter = i[1]
+            temp[index] = letter
+        print(temp)
 
-        s0, s1, s2, s3, s4 = ("?",)*5
-        if correct_idx is not None:
-            if 0 in correct_idx:
-                s0 = correct_idx[0]
-            if 1 in correct_idx:
-                s1 = correct_idx[1]
-            if 2 in correct_idx:
-                s2 = correct_idx[2]
-            if 3 in correct_idx:
-                s3 = correct_idx[3]
-            if 4 in correct_idx:
-                s4 = correct_idx[4]
-
-        # TODO 
-        #-----------------------------------------------------------
-        
-        print(f's0: {s0}, s1: {s1}, s2: {s2}, s3: {s3}, s4: {s4}')
-
-        temp = s0 + s1 + s2 + s3 + s4
         n_wildcard = temp.count('?')
+
+        presentletters = []
+        for i in present:
+            presentletters.append(i[1])
 
         # Limit amount of checks when user has identifed at least 3 characters
         if n_wildcard < 3:
             for p in possibilties(temp,letters):
-                print(p)
                 if p in words:
+
+                    # Check to see if other letters exist in string. 
+                    # if present is not None:
+                        # for i in p:
+                        #     if any(i in x for x in present):
+                        #         possible.add(p)
+                    # else:
                     possible.add(p)
             
             print(f'Possible Words Include: {possible}')
 
         else:
             print(f'Not enough information, guess again')
-
+        printboard(guesses, alphabetlist)
 
 if __name__ == "__main__":
     main()

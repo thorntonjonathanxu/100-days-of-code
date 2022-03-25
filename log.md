@@ -38,3 +38,10 @@ Need to figure out how to generate the substring permutations without completely
 Decided to refactor the method on generating the words by leveraging the itertools generator object. Rather than trying to build out a dynamic list, I decided to create a string with the indexes of the know characters set and then keeping the unknown set to a '?' indicator. The method generates all permutations and checks if its a valid word. To save on runtime, the user needs to guess at least 3 positional letters. 
 
 Never really enjoyed using generators but this was definitely an ideal use case for leveraging it. Next steps will be to build methods on using the information about the words that are present and loading that content into the string checks.
+
+### Day 7
+
+For todays code I refactored most of the functions and removed the content that is no longer being leveraged in the build. With the method that parses out the content there was a lot of manual effort on calculating the index when a simple build handled the case as needed. Currently reviewing the next steps on how to handle this project and thinking I may go towards a simple Tkinter UI for the game to show the scores as they come up.
+
+### Day 8
+Removed redundant code around the solved string indicies and started to experiment with mapping content on a canvas. Had issues with the tkinter library rendering the content and will experiment with simple code blocks until I get the format similar to the wordle page. My objective with the UI is to be able to generate a simple gameboard utilizing tkinter. 
